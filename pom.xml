@@ -69,6 +69,55 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+
+         <!-- JaCoCo: code coverage -->
+          <plugin>
+              <groupId>org.jacoco</groupId>
+              <artifactId>jacoco-maven-plugin</artifactId>
+              <version>0.8.12</version>
+              <executions>
+                  <!-- Attach JaCoCo to test phase -->
+                  <execution>
+                      <id>prepare-agent</id>
+                      <goals>
+                          <goal>prepare-agent</goal>
+                      </goals>
+                  </execution>
+
+                  <!-- Generate coverage report in verify phase -->
+                  <execution>
+                      <id>report</id>
+                      <phase>verify</phase>
+                      <goals>
+                          <goal>report</goal>
+                      </goals>
+                  </execution>
+              </executions>
+          </plugin>
+
+          <!-- SpotBugs: static analysis -->
+          <plugin>
+              <groupId>com.github.spotbugs</groupId>
+              <artifactId>spotbugs-maven-plugin</artifactId>
+              <version>4.8.6.2</version>
+              <configuration>
+                  <!-- Fail the build on HIGH priority bugs (optional) -->
+                  <effort>Max</effort>
+                  <threshold>High</threshold>
+                  <!-- Generate XML + HTML reports -->
+                  <xmlOutput>true</xmlOutput>
+                  <failOnError>false</failOnError> <!-- set true later if you want stricter CI -->
+              </configuration>
+              <executions>
+                  <execution>
+                      <phase>verify</phase>
+                      <goals>
+                          <goal>check</goal>
+                      </goals>
+                  </execution>
+              </executions>
+          </plugin>
+
       </plugins>
     </pluginManagement>
   </build>
